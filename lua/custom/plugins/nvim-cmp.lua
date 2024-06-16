@@ -35,6 +35,7 @@ return {
       'hrsh7th/cmp-nvim-lsp',
       'hrsh7th/cmp-path',
       'zjp-CN/nvim-cmp-lsp-rs',
+      'Saecki/crates.nvim',
     },
     config = function()
       -- See `:help cmp`
@@ -46,6 +47,7 @@ return {
         { name = 'nvim_lsp' },
         { name = 'luasnip' },
         { name = 'path' },
+        { name = 'crates' },
       }
       -- better rust completions
       local config_sources = cmp.config.sources(sources)
