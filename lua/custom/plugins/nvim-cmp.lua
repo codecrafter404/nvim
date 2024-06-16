@@ -34,12 +34,26 @@ return {
       --  into multiple repos for maintenance purposes.
       'hrsh7th/cmp-nvim-lsp',
       'hrsh7th/cmp-path',
+      'zjp-CN/nvim-cmp-lsp-rs',
     },
     config = function()
       -- See `:help cmp`
       local cmp = require 'cmp'
       local luasnip = require 'luasnip'
       luasnip.config.setup {}
+
+      local sources = {
+        { name = 'nvim_lsp' },
+        { name = 'luasnip' },
+        { name = 'path' },
+      }
+      -- better rust completions
+      local config_sources = cmp.config.sources(sources)
+
+      local comparators = require('cmp_lsp_rs').comparators
+      for _, source in ipairs(config_sources) do
+        require('cmp_lsp_rs').filter_out.entry_filter(source)
+      end
 
       cmp.setup {
         snippet = {
@@ -101,10 +115,13 @@ return {
           -- For more advanced Luasnip keymaps (e.g. selecting choice nodes, expansion) see:
           --    https://github.com/L3MON4D3/LuaSnip?tab=readme-ov-file#keymaps
         },
-        sources = {
-          { name = 'nvim_lsp' },
-          { name = 'luasnip' },
-          { name = 'path' },
+        sources = config_sources,
+        sorting = {
+          priority_weight = 1.0,
+          comparators = {
+            comparators.inscope_inherent_import,
+            comparators.sort_by_label_but_underscore_last,
+          },
         },
       }
     end,
