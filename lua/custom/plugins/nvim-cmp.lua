@@ -48,6 +48,7 @@ return {
         { name = 'luasnip' },
         { name = 'path' },
         { name = 'crates' },
+        { name = 'emoji' },
       }
       -- better rust completions
       local config_sources = cmp.config.sources(sources)
