@@ -169,6 +169,7 @@ return {
         -- But for many setups, the LSP (`tsserver`) will work just fine
         -- tsserver = {},
         --
+        dartls = {},
 
         lua_ls = {
           -- cmd = {...},
@@ -192,11 +193,21 @@ return {
       --    :Mason
       --
       --  You can press `g?` for help in this menu.
+
       require('mason').setup()
 
       -- You can add other tools here that you want Mason to install
       -- for you, so that they are available from within Neovim.
       local ensure_installed = vim.tbl_keys(servers or {})
+
+      -- some servers cant't be installed using mason
+      local exclued_servers = { 'dartls' }
+      for i, server in ipairs(ensure_installed) do
+        if vim.list_contains(exclued_servers, server) then
+          ensure_installed[i] = nil
+        end
+      end
+
       vim.list_extend(ensure_installed, {
         'stylua', -- Used to format Lua code
       })
@@ -214,6 +225,9 @@ return {
           end,
         },
       }
+
+      -- init the dart/flutter lsp
+      require('lspconfig').dartls.setup {}
     end,
   },
 }
