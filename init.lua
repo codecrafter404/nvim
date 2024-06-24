@@ -93,6 +93,14 @@ vim.g.maplocalleader = ' '
 -- Set to true if you have a Nerd Font installed and selected in the terminal
 vim.g.have_nerd_font = true
 
+-- Set the node neovim cli path or else the healthcheck crashes (is frozen)
+if vim.fn.has 'win32' == 1 then
+  vim.g.node_host_prog = 'C:\\Program Files\\nodejs\\node_modules\\neovim\\bin\\cli.js'
+end
+
+-- disable the pearl provider
+vim.g.loaded_perl_provider = 0
+
 -- [[ Setting options ]]
 -- See `:help vim.opt`
 -- NOTE: You can change these options as you wish!
