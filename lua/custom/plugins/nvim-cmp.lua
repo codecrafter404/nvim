@@ -26,6 +26,12 @@ return {
           --   end,
           -- },
         },
+        config = function()
+          -- require('luasnip.loaders.from_vscode').lazy_load {
+          --   paths = { '../../../snippets' },
+          -- }
+          require('luasnip.loaders.from_snipmate').lazy_load()
+        end,
       },
       'saadparwaiz1/cmp_luasnip',
 
