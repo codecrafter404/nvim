@@ -176,6 +176,8 @@ return {
         lemminx = {
           filetypes = { 'xml', 'xsd', 'xsl', 'xslt', 'svg', 'wxs' },
         },
+        tailwindcss = {},
+
         dartls = {},
 
         lua_ls = {
