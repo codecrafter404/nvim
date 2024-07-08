@@ -158,7 +158,9 @@ vim.opt.scrolloff = 10
 
 -- Default terminal
 if vim.fn.has 'win64' then
-  vim.opt.shell = 'powershell.exe'
+  vim.opt.shell = 'pwsh'
+  vim.opt.shellcmdflag = '-nologo -noprofile -ExecutionPolicy RemoteSigned -command'
+  vim.opt.shellxquote = ''
 end
 
 -- [[ Basic Keymaps ]]

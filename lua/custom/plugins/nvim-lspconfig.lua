@@ -174,7 +174,7 @@ return {
         svelte = {},
         cssls = {},
         lemminx = {
-          filetypes = { 'xml', 'xsd', 'xsl', 'xslt', 'svg', 'wxs' },
+          filetypes = { 'xml', 'xsd', 'xsl', 'xslt', 'svg', 'wxs', 'html' },
         },
         tailwindcss = {},
 
