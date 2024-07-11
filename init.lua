@@ -90,7 +90,6 @@ P.S. You can delete this when you're done too. It's your config now! :)
 vim.g.mapleader = ' '
 vim.g.maplocalleader = ' '
 
-vim.opt.formatoptions:remove 'c'
 -- Set to true if you have a Nerd Font installed and selected in the terminal
 vim.g.have_nerd_font = true
 
@@ -211,6 +210,14 @@ vim.api.nvim_create_autocmd('TextYankPost', {
   group = vim.api.nvim_create_augroup('kickstart-highlight-yank', { clear = true }),
   callback = function()
     vim.highlight.on_yank()
+  end,
+})
+
+-- removes the comment line automatic comment line breaking
+vim.api.nvim_create_autocmd('BufEnter', {
+  desc = 'Remove the comment line breaking after n columns',
+  callback = function()
+    vim.opt.formatoptions:remove 'c'
   end,
 })
 
