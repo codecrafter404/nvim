@@ -2,7 +2,6 @@
 
 =====================================================================
 ==================== READ THIS BEFORE CONTINUING ====================
-=====================================================================
 ========                                    .-----.          ========
 ========         .----------------------.   | === |          ========
 ========         |.-""""""""""""""""""-.|   |-----|          ========
@@ -157,7 +156,7 @@ vim.opt.cursorline = true
 vim.opt.scrolloff = 10
 
 -- Default terminal
-if vim.fn.has 'win64' then
+if vim.fn.has 'win64' == 1 then
   vim.opt.shell = 'pwsh'
   vim.opt.shellcmdflag = '-nologo -noprofile -ExecutionPolicy RemoteSigned -command'
   vim.opt.shellxquote = ''
