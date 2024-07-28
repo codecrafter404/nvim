@@ -162,6 +162,8 @@ if vim.fn.has 'win64' == 1 then
   vim.opt.shellxquote = ''
 end
 
+-- all line  end character
+vim.opt.fileformats = 'unix,dos,mac'
 -- [[ Basic Keymaps ]]
 --  See `:help vim.keymap.set()`
 

@@ -179,6 +179,14 @@ return {
         tailwindcss = {},
 
         dartls = {},
+        yamlls = {
+          settings = {
+            schemas = {
+              ['https://json.schemastore.org/github-workflow.json'] = '/.github/workflows/*',
+              ['kubernetes'] = '/fluxcd/*.yaml',
+            },
+          },
+        },
 
         lua_ls = {
           -- cmd = {...},
