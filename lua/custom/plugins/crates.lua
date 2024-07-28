@@ -1,6 +1,6 @@
 return {
   'Saecki/crates.nvim',
-  -- event = { 'BufRead Cargo.toml' },
+  event = { 'BufRead Cargo.toml' },
   config = function()
     -- require('cmp').setup.buffer { sources = { { name = 'crates' } } }
     require('crates').setup {
