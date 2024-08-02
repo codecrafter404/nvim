@@ -83,6 +83,8 @@ I hope you enjoy your Neovim journey,
 P.S. You can delete this when you're done too. It's your config now! :)
 --]]
 
+vim.cmd 'language eng'
+
 -- Set <space> as the leader key
 -- See `:help mapleader`
 --  NOTE: Must happen before plugins are loaded (otherwise wrong leader will be used)
@@ -93,9 +95,9 @@ vim.g.maplocalleader = ' '
 vim.g.have_nerd_font = true
 
 -- Set the node neovim cli path or else the healthcheck crashes (is frozen)
-if vim.fn.has 'win32' == 1 then
-  vim.g.node_host_prog = 'C:\\Program Files\\nodejs\\node_modules\\neovim\\bin\\cli.js'
-end
+-- if vim.fn.has 'win32' == 1 then
+--   vim.g.node_host_prog = 'C:\\Program Files\\nodejs\\node_modules\\neovim\\bin\\cli.js'
+-- end
 
 -- disable the pearl provider
 vim.g.loaded_perl_provider = 0
