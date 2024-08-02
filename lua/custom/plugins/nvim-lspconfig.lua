@@ -188,7 +188,7 @@ return {
           dartls = {},
           phpactor = {},
         }
-        for server in unslim_servers do
+        for _, server in ipairs(unslim_servers) do
           table.insert(servers, 0, server)
         end
       end
