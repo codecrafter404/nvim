@@ -172,6 +172,7 @@ return {
             },
           },
         },
+        pyright = {},
       }
 
       -- Load some lsps only, when $NVIM_SLIM == false
