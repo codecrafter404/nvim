@@ -189,6 +189,8 @@ return {
 
           dartls = {},
           phpactor = {},
+          gopls = {},
+          graphql = {},
         }
         for _, server in ipairs(unslim_servers) do
           table.insert(servers, 0, server)
