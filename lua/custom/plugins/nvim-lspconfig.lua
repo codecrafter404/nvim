@@ -15,6 +15,7 @@ return {
       -- `neodev` configures Lua LSP for your Neovim config, runtime and plugins
       -- used for completion, annotations and signatures of Neovim apis
       { 'folke/neodev.nvim', opts = {} },
+      { 'diogo464/kubernetes.nvim', commit = '101e63f8f92b2ae9cf6a78560bc2b2321d1264af' },
     },
     config = function()
       -- Brief aside: **What is LSP?**
@@ -149,9 +150,12 @@ return {
         yamlls = {
           settings = {
             schemas = {
-              ['https://json.schemastore.org/github-workflow.json'] = '/.github/workflows/*',
-              ['kubernetes'] = '/fluxcd/*.yaml',
+              [require('kubernetes').yamlls_schema()] = 'DevOps/**/*.{yml,yaml}',
+              ['http://json.schemastore.org/ansible-stable-2.9'] = 'Ansible/roles/tasks/**/*.{yml,yaml}',
             },
+          },
+          format = {
+            enable = true,
           },
         },
 
@@ -172,7 +176,6 @@ return {
             },
           },
         },
-        pyright = {},
       }
 
       -- Load some lsps only, when $NVIM_SLIM == false
@@ -185,12 +188,65 @@ return {
           tsserver = {},
           svelte = {},
           cssls = {},
-          tailwindcss = {},
+          tailwindcss = {
+            filetypes = {
+              'aspnetcorerazor',
+              'astro',
+              'blade',
+              'clojure',
+              'django-html',
+              'htmldjango',
+              'edge',
+              'eelixir',
+              'elixir',
+              'ejs',
+              'erb',
+              'eruby',
+              'gohtml',
+              'gohtmltmpl',
+              'haml',
+              'handlebars',
+              'hbs',
+              'html',
+              'htmlangular',
+              'html-eex',
+              'heex',
+              'jade',
+              'leaf',
+              'liquid',
+              'mdx',
+              'mustache',
+              'njk',
+              'nunjucks',
+              'php',
+              'razor',
+              'slim',
+              'twig',
+              'css',
+              'less',
+              'postcss',
+              'sass',
+              'scss',
+              'stylus',
+              'sugarss',
+              'javascript',
+              'javascriptreact',
+              'reason',
+              'rescript',
+              'typescript',
+              'typescriptreact',
+              'vue',
+              'svelte',
+              'templ',
+            },
+          },
 
+          jsonls = {},
           dartls = {},
           phpactor = {},
           gopls = {},
           graphql = {},
+          pyright = {},
         }
         for _, server in ipairs(unslim_servers) do
           table.insert(servers, 0, server)
