@@ -188,6 +188,7 @@ return {
           tsserver = {},
           svelte = {},
           cssls = {},
+          phpactor = {},
           tailwindcss = {
             filetypes = {
               'aspnetcorerazor',
@@ -214,7 +215,6 @@ return {
               'jade',
               'leaf',
               'liquid',
-              'mdx',
               'mustache',
               'njk',
               'nunjucks',
