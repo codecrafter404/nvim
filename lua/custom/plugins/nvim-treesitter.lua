@@ -1,7 +1,6 @@
 return {
   { -- Highlight, edit, and navigate code
     'nvim-treesitter/nvim-treesitter',
-    commit = '09bad640e4507885fa0e7035348c7854c531b3d6',
     build = ':TSUpdate',
     opts = {
       ensure_installed = { 'bash', 'c', 'diff', 'html', 'lua', 'luadoc', 'markdown', 'vim', 'vimdoc', 'svelte', 'typescript', 'css', 'scss', 'javascript' },

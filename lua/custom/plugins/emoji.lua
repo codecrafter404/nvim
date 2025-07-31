@@ -1,6 +1,5 @@
 return {
   'allaman/emoji.nvim',
-  commit = '009e6b247e40aea29bce52cec6a667cceaff1a6b',
   -- ft = 'markdown', -- adjust to your needs
   dependencies = {
     -- optional for nvim-cmp integration

@@ -1,10 +1,9 @@
 return {
   { -- LSP Configuration & Plugins
     'neovim/nvim-lspconfig',
-    commit = 'e6528f4613c8db2e04be908eb2b5886d63f62a98',
     dependencies = {
       -- Automatically install LSPs and related tools to stdpath for Neovim
-      { 'williamboman/mason.nvim', config = true }, -- NOTE: Must be loaded before dependants
+      { 'williamboman/mason.nvim', opts = {} }, -- NOTE: Must be loaded before dependants
       'williamboman/mason-lspconfig.nvim',
       'WhoIsSethDaniel/mason-tool-installer.nvim',
 
@@ -14,8 +13,9 @@ return {
 
       -- `neodev` configures Lua LSP for your Neovim config, runtime and plugins
       -- used for completion, annotations and signatures of Neovim apis
-      { 'folke/neodev.nvim', opts = {} },
-      { 'diogo464/kubernetes.nvim', commit = '101e63f8f92b2ae9cf6a78560bc2b2321d1264af' },
+      -- { 'folke/neodev.nvim', opts = {} },
+      -- { 'diogo464/kubernetes.nvim', commit = '101e63f8f92b2ae9cf6a78560bc2b2321d1264af' },
+      'saghen/blink.cmp',
     },
     config = function()
       -- Brief aside: **What is LSP?**
@@ -141,6 +141,35 @@ return {
         end,
       })
 
+      -- Diagnostic Config
+      -- See :help vim.diagnostic.Opts
+      vim.diagnostic.config {
+        severity_sort = true,
+        float = { border = 'rounded', source = 'if_many' },
+        underline = { severity = vim.diagnostic.severity.ERROR },
+        signs = vim.g.have_nerd_font and {
+          text = {
+            [vim.diagnostic.severity.ERROR] = '󰅚 ',
+            [vim.diagnostic.severity.WARN] = '󰀪 ',
+            [vim.diagnostic.severity.INFO] = '󰋽 ',
+            [vim.diagnostic.severity.HINT] = '󰌶 ',
+          },
+        } or {},
+        virtual_text = {
+          source = 'if_many',
+          spacing = 2,
+          format = function(diagnostic)
+            local diagnostic_message = {
+              [vim.diagnostic.severity.ERROR] = diagnostic.message,
+              [vim.diagnostic.severity.WARN] = diagnostic.message,
+              [vim.diagnostic.severity.INFO] = diagnostic.message,
+              [vim.diagnostic.severity.HINT] = diagnostic.message,
+            }
+            return diagnostic_message[diagnostic.severity]
+          end,
+        },
+      }
+
       local capabilities = vim.lsp.protocol.make_client_capabilities()
       capabilities = vim.tbl_deep_extend('force', capabilities, require('cmp_nvim_lsp').default_capabilities())
       capabilities.textDocument.completion.completionItem.snippetSupport = true
@@ -148,12 +177,6 @@ return {
       local servers = {
         marksman = {},
         yamlls = {
-          settings = {
-            schemas = {
-              [require('kubernetes').yamlls_schema()] = 'DevOps/**/*.{yml,yaml}',
-              ['http://json.schemastore.org/ansible-stable-2.9'] = 'Ansible/roles/tasks/**/*.{yml,yaml}',
-            },
-          },
           format = {
             enable = true,
           },
@@ -260,8 +283,6 @@ return {
       --
       --  You can press `g?` for help in this menu.
 
-      require('mason').setup()
-
       -- You can add other tools here that you want Mason to install
       -- for you, so that they are available from within Neovim.
       local ensure_installed = vim.tbl_keys(servers or {})
@@ -280,20 +301,19 @@ return {
       require('mason-tool-installer').setup { ensure_installed = ensure_installed }
 
       require('mason-lspconfig').setup {
+        ensure_installed = {}, -- explicitly set to an empty table (Kickstart populates installs via mason-tool-installer)
+        automatic_installation = false,
         handlers = {
           function(server_name)
             local server = servers[server_name] or {}
             -- This handles overriding only values explicitly passed
             -- by the server configuration above. Useful when disabling
-            -- certain features of an LSP (for example, turning off formatting for tsserver)
+            -- certain features of an LSP (for example, turning off formatting for ts_ls)
             server.capabilities = vim.tbl_deep_extend('force', {}, capabilities, server.capabilities or {})
             require('lspconfig')[server_name].setup(server)
           end,
         },
       }
-
-      -- init the dart/flutter lsp
-      require('lspconfig').dartls.setup {}
     end,
   },
 }

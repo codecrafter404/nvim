@@ -1,7 +1,6 @@
 return {
   { -- Autoformat
     'stevearc/conform.nvim',
-    commit = '25d48271e3d4404ba017cb92a37d3a681c1ad149',
     event = { 'BufWritePre' },
     cmd = { 'ConformInfo' },
     keys = {
