@@ -170,9 +170,7 @@ return {
         },
       }
 
-      local capabilities = vim.lsp.protocol.make_client_capabilities()
-      capabilities = vim.tbl_deep_extend('force', capabilities, require('cmp_nvim_lsp').default_capabilities())
-      capabilities.textDocument.completion.completionItem.snippetSupport = true
+      local capabilities = require('blink.cmp').get_lsp_capabilities()
 
       local servers = {
         marksman = {},
@@ -199,82 +197,68 @@ return {
             },
           },
         },
-      }
-
-      -- Load some lsps only, when $NVIM_SLIM == false
-
-      local nvim_slim = os.getenv 'NVIM_SLIM'
-
-      if nvim_slim == nil or nvim_slim == 'false' then
-        local unslim_servers = {
-          rust_analyzer = {},
-          tsserver = {},
-          svelte = {},
-          cssls = {},
-          phpactor = {},
-          tailwindcss = {
-            filetypes = {
-              'aspnetcorerazor',
-              'astro',
-              'blade',
-              'clojure',
-              'django-html',
-              'htmldjango',
-              'edge',
-              'eelixir',
-              'elixir',
-              'ejs',
-              'erb',
-              'eruby',
-              'gohtml',
-              'gohtmltmpl',
-              'haml',
-              'handlebars',
-              'hbs',
-              'html',
-              'htmlangular',
-              'html-eex',
-              'heex',
-              'jade',
-              'leaf',
-              'liquid',
-              'mustache',
-              'njk',
-              'nunjucks',
-              'php',
-              'razor',
-              'slim',
-              'twig',
-              'css',
-              'less',
-              'postcss',
-              'sass',
-              'scss',
-              'stylus',
-              'sugarss',
-              'javascript',
-              'javascriptreact',
-              'reason',
-              'rescript',
-              'typescript',
-              'typescriptreact',
-              'vue',
-              'svelte',
-              'templ',
-            },
+        rust_analyzer = {},
+        ts_ls = {},
+        svelte = {},
+        cssls = {},
+        phpactor = {},
+        tailwindcss = {
+          filetypes = {
+            'aspnetcorerazor',
+            'astro',
+            'blade',
+            'clojure',
+            'django-html',
+            'htmldjango',
+            'edge',
+            'eelixir',
+            'elixir',
+            'ejs',
+            'erb',
+            'eruby',
+            'gohtml',
+            'gohtmltmpl',
+            'haml',
+            'handlebars',
+            'hbs',
+            'html',
+            'htmlangular',
+            'html-eex',
+            'heex',
+            'jade',
+            'leaf',
+            'liquid',
+            'mustache',
+            'njk',
+            'nunjucks',
+            'php',
+            'razor',
+            'slim',
+            'twig',
+            'css',
+            'less',
+            'postcss',
+            'sass',
+            'scss',
+            'stylus',
+            'sugarss',
+            'javascript',
+            'javascriptreact',
+            'reason',
+            'rescript',
+            'typescript',
+            'typescriptreact',
+            'vue',
+            'svelte',
+            'templ',
           },
+        },
 
-          jsonls = {},
-          dartls = {},
-          phpactor = {},
-          gopls = {},
-          graphql = {},
-          pyright = {},
-        }
-        for _, server in ipairs(unslim_servers) do
-          table.insert(servers, 0, server)
-        end
-      end
+        jsonls = {},
+        gopls = {},
+        graphql = {},
+        pyright = {},
+      }
 
       -- Ensure the servers and tools above are installed
       --  To check the current status of installed tools and/or manually install
@@ -286,15 +270,6 @@ return {
       -- You can add other tools here that you want Mason to install
       -- for you, so that they are available from within Neovim.
       local ensure_installed = vim.tbl_keys(servers or {})
-
-      -- some servers cant't be installed using mason
-      local exclued_servers = { 'dartls' }
-      for i, server in ipairs(ensure_installed) do
-        if vim.list_contains(exclued_servers, server) then
-          ensure_installed[i] = nil
-        end
-      end
-
       vim.list_extend(ensure_installed, {
         'stylua', -- Used to format Lua code
       })
