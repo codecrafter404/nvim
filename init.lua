@@ -206,7 +206,7 @@ vim.keymap.set('n', '<leader>if', function()
   local pos = vim.api.nvim_win_get_cursor(0)
 
   local line = vim.fn.getline(pos[1])
-  line = line:sub(1, pos[2] + 1) .. '![' .. biggest_name .. '](' .. nec .. ')' .. line:sub(pos[2] + 1)
+  line = line:sub(1, pos[2] + 1) .. '[' .. biggest_name .. '](' .. nec .. ')' .. line:sub(pos[2] + 1)
   vim.fn.setline(pos[1], line)
 end)
 
