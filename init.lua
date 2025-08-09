@@ -179,6 +179,37 @@ vim.keymap.set('n', ']d', vim.diagnostic.goto_next, { desc = 'Go to next [D]iagn
 vim.keymap.set('n', '<leader>e', vim.diagnostic.open_float, { desc = 'Show diagnostic [E]rror messages' })
 vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist, { desc = 'Open diagnostic [Q]uickfix list' })
 
+-- Insert
+vim.keymap.set('n', '<leader>if', function()
+  local base = vim.fs.joinpath(vim.env.PWD, '/Attachements/PDF')
+  local files = vim.fs.dir(base)
+
+  local biggest = 0
+  local biggest_name = ''
+
+  for name, _ in files do
+    local last_mod = vim.loop.fs_stat(vim.fs.joinpath(base, name)).mtime.sec
+    if last_mod > biggest then
+      biggest = last_mod
+      biggest_name = name
+    end
+  end
+
+  if biggest == 0 then
+    print 'No file to insert found'
+    return
+  end
+
+  local file = vim.fs.joinpath(base, biggest_name)
+  local nec = file:gsub(' ', '%%20')
+
+  local pos = vim.api.nvim_win_get_cursor(0)
+
+  local line = vim.fn.getline(pos[1])
+  line = line:sub(1, pos[2] + 1) .. '![' .. biggest_name .. '](' .. nec .. ')' .. line:sub(pos[2] + 1)
+  vim.fn.setline(pos[1], line)
+end)
+
 -- Exit terminal mode in the builtin terminal with a shortcut that is a bit easier
 -- for people to discover. Otherwise, you normally need to press <C-\><C-n>, which
 -- is not what someone will guess without a bit more experience.
@@ -224,4 +255,4 @@ vim.api.nvim_create_autocmd('BufEnter', {
   end,
 })
 
-require('config.lazy')
+require 'config.lazy'
