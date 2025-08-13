@@ -83,6 +83,14 @@ I hope you enjoy your Neovim journey,
 P.S. You can delete this when you're done too. It's your config now! :)
 --]]
 
+function InsertUnderCursor(text)
+  local pos = vim.api.nvim_win_get_cursor(0)
+
+  local line = vim.fn.getline(pos[1])
+  line = line:sub(1, pos[2] + 1) .. text .. line:sub(pos[2] + 1)
+  vim.fn.setline(pos[1], line)
+end
+
 vim.cmd 'language en_US'
 
 -- Set <space> as the leader key
@@ -201,14 +209,14 @@ vim.keymap.set('n', '<leader>if', function()
   end
 
   local file = vim.fs.joinpath(base, biggest_name)
+  file = file:sub(vim.env.PWD:len() + 2, file:len())
   local nec = file:gsub(' ', '%%20')
 
-  local pos = vim.api.nvim_win_get_cursor(0)
-
-  local line = vim.fn.getline(pos[1])
-  line = line:sub(1, pos[2] + 1) .. '[' .. biggest_name .. '](' .. nec .. ')' .. line:sub(pos[2] + 1)
-  vim.fn.setline(pos[1], line)
-end)
+  InsertUnderCursor('[' .. biggest_name .. '](' .. nec .. ')')
+end, { desc = 'Link the last modified file' })
+vim.keymap.set('n', '<leader>id', function()
+  InsertUnderCursor('[' .. vim.fn.strftime '%d/%m/%y %H:%M' .. ']()')
+end, { desc = 'Insert a date Link' })
 
 -- Exit terminal mode in the builtin terminal with a shortcut that is a bit easier
 -- for people to discover. Otherwise, you normally need to press <C-\><C-n>, which
