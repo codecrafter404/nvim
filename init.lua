@@ -8,7 +8,7 @@ function InsertUnderCursor(text)
   vim.fn.setline(pos[1], line)
 end
 
-vim.cmd 'language en_US'
+vim.env.LANG = 'en_US.UTF-8'
 
 -- Set <space> as the leader key
 -- See `:help mapleader`
