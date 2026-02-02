@@ -189,6 +189,6 @@ Before marking this complete, users should test:
 
 ---
 
-**Created**: 2024-02
+**Created**: 2024-02-02
 **Author**: Automated Plugin Update Process
 **Configuration**: codecrafter404/nvim

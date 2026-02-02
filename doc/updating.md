@@ -249,6 +249,6 @@ git commit -m "Pin all plugins to stable versions for consistency"
 
 ---
 
-**Last Updated**: 2024
+**Last Updated**: 2024-02-02
 **Neovim Version**: >= 0.10.0
 **Plugin Manager**: lazy.nvim (stable branch)
