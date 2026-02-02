@@ -262,6 +262,7 @@ return {
         gopls = {},
         graphql = {},
         pyright = {},
+        tinymist = {},
       }
 
       ---@type MasonLspconfigSettings
