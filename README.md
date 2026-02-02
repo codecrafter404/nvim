@@ -108,6 +108,14 @@ examples of adding popularly requested plugins.
 
 [The Only Video You Need to Get Started with Neovim](https://youtu.be/m8C0Cq9Uv9o)
 
+### Plugin Management
+
+This configuration uses pinned plugin versions to ensure stability. See [doc/updating.md](doc/updating.md) for information on:
+- How plugins are versioned
+- How to update plugins safely
+- Troubleshooting plugin issues
+- Best practices for plugin management
+
 ### FAQ
 
 * What should I do if I already have a pre-existing neovim configuration?

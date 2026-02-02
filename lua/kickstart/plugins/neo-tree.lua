@@ -3,11 +3,11 @@
 
 return {
   'nvim-neo-tree/neo-tree.nvim',
-  version = '*',
+  tag = 'v3.27',
   dependencies = {
-    'nvim-lua/plenary.nvim',
-    'nvim-tree/nvim-web-devicons', -- not strictly required, but recommended
-    'MunifTanjim/nui.nvim',
+    { 'nvim-lua/plenary.nvim', tag = 'v0.1.4' },
+    { 'nvim-tree/nvim-web-devicons', tag = 'v0.100' }, -- not strictly required, but recommended
+    { 'MunifTanjim/nui.nvim', tag = '0.3.0' },
   },
   cmd = 'Neotree',
   keys = {

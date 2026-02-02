@@ -41,4 +41,12 @@ require('lazy').setup {
       lazy = '💤 ',
     },
   },
+  -- Enable lockfile to pin plugin versions
+  lockfile = vim.fn.stdpath 'config' .. '/lazy-lock.json',
+  performance = {
+    reset_packpath = true,
+    rtp = {
+      reset = true,
+    },
+  },
 }
