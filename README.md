@@ -103,18 +103,17 @@ Read through the `init.lua` file in your configuration folder for more
 information about extending and exploring Neovim. That also includes
 examples of adding popularly requested plugins.
 
+### Additional Documentation
+
+- **[Quick Start Guide](doc/quickstart.md)** - Get started quickly with essential keybindings and setup
+- **[Plugin Management](doc/updating.md)** - Learn how to safely update and manage plugins
+- **[Plugin Versions](doc/plugin-versions.md)** - Reference of all pinned plugin versions
+- **[Changelog](CHANGELOG.md)** - Track changes and updates to this configuration
+
 
 ### Getting Started
 
 [The Only Video You Need to Get Started with Neovim](https://youtu.be/m8C0Cq9Uv9o)
-
-### Plugin Management
-
-This configuration uses pinned plugin versions to ensure stability. See [doc/updating.md](doc/updating.md) for information on:
-- How plugins are versioned
-- How to update plugins safely
-- Troubleshooting plugin issues
-- Best practices for plugin management
 
 ### FAQ
 
