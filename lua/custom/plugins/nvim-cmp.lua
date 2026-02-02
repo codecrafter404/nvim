@@ -1,13 +1,13 @@
 return {
   { -- Autocompletion
     'hrsh7th/nvim-cmp',
-    commit = 'ae644fe',
+    tag = 'v0.0.2',
     event = 'InsertEnter',
     dependencies = {
       -- Snippet Engine & its associated nvim-cmp source
       {
         'L3MON4D3/LuaSnip',
-        tag = 'v2.3.0',
+        tag = 'v2.4.1',
         build = (function()
           -- Build Step is needed for regex support in snippets.
           -- This step is not supported in many windows environments.
@@ -35,15 +35,14 @@ return {
           require('luasnip.loaders.from_snipmate').lazy_load()
         end,
       },
-      { 'saadparwaiz1/cmp_luasnip', commit = '05a9ab2' },
+      { 'saadparwaiz1/cmp_luasnip', commit = '98d9cb5' },
 
       -- Adds other completion capabilities.
       --  nvim-cmp does not ship with all sources by default. They are split
       --  into multiple repos for maintenance purposes.
-      { 'hrsh7th/cmp-nvim-lsp', commit = '39e2eda' },
-      { 'hrsh7th/cmp-path', commit = '91ff86c' },
-      { 'zjp-CN/nvim-cmp-lsp-rs', commit = '371971e' },
-      { 'Saecki/crates.nvim', tag = 'v0.5.3' },
+      { 'hrsh7th/cmp-nvim-lsp', commit = 'cbc7b02bb99fae35cb42f514762b89b5126651ef' },
+      { 'hrsh7th/cmp-path', commit = 'c642487086dbd9a93160e1679a1327be111cbc25' },
+      { 'zjp-CN/nvim-cmp-lsp-rs', commit = '329075b806deb719d3ce4f55a7e443541ce5289d' },
     },
     config = function()
       -- See `:help cmp`
@@ -55,7 +54,6 @@ return {
         { name = 'nvim_lsp' },
         { name = 'luasnip' },
         { name = 'path' },
-        { name = 'crates' },
       }
       -- better rust completions
       local config_sources = cmp.config.sources(sources)

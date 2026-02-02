@@ -1,7 +1,7 @@
 return {
   { -- Collection of various small independent plugins/modules
     'echasnovski/mini.nvim',
-    tag = 'v0.14.0',
+    tag = 'v0.17.0',
     config = function()
       -- Better Around/Inside textobjects
       --
