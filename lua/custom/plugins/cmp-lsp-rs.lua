@@ -1,6 +1,7 @@
 return {
   'zjp-CN/nvim-cmp-lsp-rs',
-  dependencies = 'hrsh7th/nvim-cmp',
+  commit = '371971e',
+  dependencies = { 'hrsh7th/nvim-cmp', commit = 'ae644fe' },
   ft = 'rust',
   opts = {},
 }

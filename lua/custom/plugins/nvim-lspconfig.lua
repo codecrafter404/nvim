@@ -1,21 +1,22 @@
 return {
   { -- LSP Configuration & Plugins
     'neovim/nvim-lspconfig',
+    tag = 'v1.3.0',
     dependencies = {
       -- Automatically install LSPs and related tools to stdpath for Neovim
-      { 'mason-org/mason.nvim', opts = {} }, -- NOTE: Must be loaded before dependants
-      'mason-org/mason-lspconfig.nvim',
-      'WhoIsSethDaniel/mason-tool-installer.nvim',
+      { 'mason-org/mason.nvim', tag = 'v1.10.0', opts = {} }, -- NOTE: Must be loaded before dependants
+      { 'mason-org/mason-lspconfig.nvim', tag = 'v1.31.0' },
+      { 'WhoIsSethDaniel/mason-tool-installer.nvim', tag = 'v1.1.0' },
 
       -- Useful status updates for LSP.
       -- NOTE: `opts = {}` is the same as calling `require('fidget').setup({})`
-      { 'j-hui/fidget.nvim', opts = {} },
+      { 'j-hui/fidget.nvim', tag = 'v1.4.5', opts = {} },
 
       -- `neodev` configures Lua LSP for your Neovim config, runtime and plugins
       -- used for completion, annotations and signatures of Neovim apis
       -- { 'folke/neodev.nvim', opts = {} },
       -- { 'diogo464/kubernetes.nvim', commit = '101e63f8f92b2ae9cf6a78560bc2b2321d1264af' },
-      'saghen/blink.cmp',
+      { 'saghen/blink.cmp', tag = 'v0.10.3' },
     },
     config = function()
       -- Brief aside: **What is LSP?**

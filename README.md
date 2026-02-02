@@ -103,6 +103,7 @@ Read through the `init.lua` file in your configuration folder for more
 information about extending and exploring Neovim. That also includes
 examples of adding popularly requested plugins.
 
+**Updating plugins:** All plugins are pinned to specific versions. Run `:Lazy sync` to update plugins after modifying version pins in the plugin files.
 
 ### Getting Started
 

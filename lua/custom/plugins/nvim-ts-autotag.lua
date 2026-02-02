@@ -1,5 +1,6 @@
 return {
   'windwp/nvim-ts-autotag',
+  tag = 'v0.11.0',
   event = { 'BufReadPre', 'BufNewFile' },
   ft = { 'svelte', 'html', 'xml', 'markdown' },
 
