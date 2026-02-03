@@ -1,6 +1,9 @@
+---@type LazyPluginSpec[]
 return {
   { -- Collection of various small independent plugins/modules
     'echasnovski/mini.nvim',
+    ---Configure mini.nvim modules
+    ---@return nil
     config = function()
       -- Better Around/Inside textobjects
       --
@@ -28,6 +31,7 @@ return {
       -- default behavior. For example, here we set the section for
       -- cursor location to LINE:COLUMN
       ---@diagnostic disable-next-line: duplicate-set-field
+      ---@return string Cursor location in LINE:COLUMN format
       statusline.section_location = function()
         return '%2l:%-2v'
       end

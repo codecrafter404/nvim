@@ -1,3 +1,4 @@
+---@type LazyPluginSpec[]
 return {
   { -- Autocompletion
     'hrsh7th/nvim-cmp',
@@ -6,6 +7,8 @@ return {
       -- Snippet Engine & its associated nvim-cmp source
       {
         'L3MON4D3/LuaSnip',
+        ---Build LuaSnip with jsregexp support
+        ---@return string|nil Build command or nil if not supported
         build = (function()
           -- Build Step is needed for regex support in snippets.
           -- This step is not supported in many windows environments.
@@ -26,6 +29,8 @@ return {
           --   end,
           -- },
         },
+        ---Configure LuaSnip with snipmate loaders
+        ---@return nil
         config = function()
           -- require('luasnip.loaders.from_vscode').lazy_load {
           --   paths = { '../../../snippets' },
@@ -42,12 +47,15 @@ return {
       { 'hrsh7th/cmp-path' },
       { 'zjp-CN/nvim-cmp-lsp-rs' },
     },
+    ---Configure nvim-cmp with all completion sources and keymaps
+    ---@return nil
     config = function()
       -- See `:help cmp`
       local cmp = require 'cmp'
       local luasnip = require 'luasnip'
       luasnip.config.setup {}
 
+      ---@type table[] Completion sources configuration
       local sources = {
         { name = 'nvim_lsp' },
         { name = 'luasnip' },
@@ -63,6 +71,9 @@ return {
 
       cmp.setup {
         snippet = {
+          ---Expand snippet using LuaSnip
+          ---@param args table Arguments containing snippet body
+          ---@return nil
           expand = function(args)
             luasnip.lsp_expand(args.body)
           end,

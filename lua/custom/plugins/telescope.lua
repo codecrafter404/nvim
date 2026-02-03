@@ -1,3 +1,4 @@
+---@type LazyPluginSpec[]
 return {
   { -- Fuzzy Finder (files, lsp, etc)
     'nvim-telescope/telescope.nvim',
@@ -13,6 +14,8 @@ return {
 
         -- `cond` is a condition used to determine whether this plugin should be
         -- installed and loaded.
+        ---Check if make is available for building fzf-native
+        ---@return boolean true if make is executable
         cond = function()
           return vim.fn.executable 'make' == 1
         end,
@@ -22,6 +25,8 @@ return {
       -- Useful for getting pretty icons, but requires a Nerd Font.
       { 'nvim-tree/nvim-web-devicons', enabled = vim.g.have_nerd_font },
     },
+    ---Configure Telescope with extensions and keymaps
+    ---@return nil
     config = function()
       -- Telescope is a fuzzy finder that comes with a lot of different things that
       -- it can fuzzy find! It's more than just a "file finder", it can search
@@ -81,6 +86,8 @@ return {
       -- Slightly advanced example of overriding default behavior and theme
       vim.keymap.set('n', '<leader>/', function()
         -- You can pass additional configuration to Telescope to change the theme, layout, etc.
+        ---Fuzzily search in current buffer with dropdown theme
+        ---@return nil
         builtin.current_buffer_fuzzy_find(require('telescope.themes').get_dropdown {
           winblend = 10,
           previewer = false,
@@ -90,6 +97,8 @@ return {
       -- It's also possible to pass additional configuration options.
       --  See `:help telescope.builtin.live_grep()` for information about particular keys
       vim.keymap.set('n', '<leader>s/', function()
+        ---Live grep in open files
+        ---@return nil
         builtin.live_grep {
           grep_open_files = true,
           prompt_title = 'Live Grep in Open Files',
@@ -98,6 +107,8 @@ return {
 
       -- Shortcut for searching your Neovim configuration files
       vim.keymap.set('n', '<leader>sn', function()
+        ---Search Neovim config files
+        ---@return nil
         builtin.find_files { cwd = vim.fn.stdpath 'config' }
       end, { desc = '[S]earch [N]eovim files' })
     end,

@@ -1,7 +1,10 @@
+---@type LazyPluginSpec[]
 return {
   { -- Useful plugin to show you pending keybinds.
     'folke/which-key.nvim',
     event = 'VimEnter', -- Sets the loading event to 'VimEnter'
+    ---Configure which-key with key group documentation
+    ---@return nil
     config = function() -- This is the function that runs, AFTER loading
       require('which-key').setup()
 

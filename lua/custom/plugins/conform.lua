@@ -1,3 +1,4 @@
+---@type LazyPluginSpec[]
 return {
   { -- Autoformat
     'stevearc/conform.nvim',
@@ -6,6 +7,8 @@ return {
     keys = {
       {
         '<leader>f',
+        ---Format the current buffer asynchronously
+        ---@return nil
         function()
           require('conform').format { async = true, lsp_fallback = true }
         end,
@@ -15,10 +18,14 @@ return {
     },
     opts = {
       notify_on_error = false,
+      ---Determine format options on save based on filetype
+      ---@param bufnr integer The buffer number to format
+      ---@return table Format options including timeout and lsp_fallback
       format_on_save = function(bufnr)
         -- Disable "format_on_save lsp_fallback" for languages that don't
         -- have a well standardized coding style. You can add additional
         -- languages here or re-enable it for the disabled ones.
+        ---@type table<string, boolean>
         local disable_filetypes = { c = true, cpp = true }
         return {
           timeout_ms = 500,

@@ -1,3 +1,4 @@
+---@type LazyPluginSpec[]
 return {
   { -- Highlight, edit, and navigate code
     'nvim-treesitter/nvim-treesitter',
@@ -15,6 +16,10 @@ return {
       },
       indent = { enable = true, disable = { 'ruby' } },
     },
+    ---Configure nvim-treesitter
+    ---@param _ table The lazy.nvim plugin spec (unused)
+    ---@param opts table The options to pass to treesitter setup
+    ---@return nil
     config = function(_, opts)
       -- [[ Configure Treesitter ]] See `:help nvim-treesitter`
 

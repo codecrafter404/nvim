@@ -10,10 +10,13 @@
 --   return 'Attachements' .. pathseperator .. res
 -- end
 
+---@type LazyPluginSpec
 return {
   'codecrafter404/clipboard-image.nvim',
   event = { 'BufReadPre', 'BufNewFile' },
   ft = { 'markdown' },
+  ---Configure clipboard-image plugin
+  ---@return nil
   config = function()
     require('clipboard-image').setup {
       -- default = {
