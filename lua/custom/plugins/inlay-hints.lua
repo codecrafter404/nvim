@@ -1,8 +1,7 @@
 return {
   'MysticalDevil/inlay-hints.nvim',
-  tag = 'v0.0.6',
   event = 'LspAttach',
-  dependencies = { { 'neovim/nvim-lspconfig', tag = 'v2.5.0' } },
+  dependencies = { { 'neovim/nvim-lspconfig' } },
   config = function()
     require('inlay-hints').setup()
   end,
