@@ -1,3 +1,4 @@
+---@module "lazy"
 ---@type LazyPluginSpec[]
 return {
   { -- You can easily change to a different colorscheme.

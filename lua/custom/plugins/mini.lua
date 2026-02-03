@@ -1,3 +1,4 @@
+---@module "lazy"
 ---@type LazyPluginSpec[]
 return {
   { -- Collection of various small independent plugins/modules

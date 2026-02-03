@@ -1,6 +1,7 @@
 -- autopairs
 -- https://github.com/windwp/nvim-autopairs
 
+---@module "lazy"
 ---@type LazyPluginSpec
 return {
   'windwp/nvim-autopairs',
