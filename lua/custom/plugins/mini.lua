@@ -31,7 +31,7 @@ return {
       -- default behavior. For example, here we set the section for
       -- cursor location to LINE:COLUMN
       ---@diagnostic disable-next-line: duplicate-set-field
-      ---@return string Cursor location in LINE:COLUMN format
+      ---@return string
       statusline.section_location = function()
         return '%2l:%-2v'
       end
