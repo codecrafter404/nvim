@@ -17,7 +17,8 @@ end
 
 vim.opt.rtp:prepend(lazypath)
 
----@type LazyConfig asdf
+---@module "lazy"
+---@type LazyConfig
 local config = {
   spec = {
     { import = 'custom.plugins' },
