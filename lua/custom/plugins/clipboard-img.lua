@@ -12,7 +12,6 @@
 
 return {
   'codecrafter404/clipboard-image.nvim',
-  commit = 'd1550dc',
   event = { 'BufReadPre', 'BufNewFile' },
   ft = { 'markdown' },
   config = function()

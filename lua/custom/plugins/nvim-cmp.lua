@@ -33,14 +33,14 @@ return {
           require('luasnip.loaders.from_snipmate').lazy_load()
         end,
       },
-      { 'saadparwaiz1/cmp_luasnip', commit = '98d9cb5' },
+      { 'saadparwaiz1/cmp_luasnip' },
 
       -- Adds other completion capabilities.
       --  nvim-cmp does not ship with all sources by default. They are split
       --  into multiple repos for maintenance purposes.
-      { 'hrsh7th/cmp-nvim-lsp', commit = 'cbc7b02bb99fae35cb42f514762b89b5126651ef' },
-      { 'hrsh7th/cmp-path', commit = 'c642487086dbd9a93160e1679a1327be111cbc25' },
-      { 'zjp-CN/nvim-cmp-lsp-rs', commit = '329075b806deb719d3ce4f55a7e443541ce5289d' },
+      { 'hrsh7th/cmp-nvim-lsp' },
+      { 'hrsh7th/cmp-path' },
+      { 'zjp-CN/nvim-cmp-lsp-rs' },
     },
     config = function()
       -- See `:help cmp`
