@@ -1,3 +1,4 @@
+---@module "lazy"
 ---@type LazyPluginSpec[]
 return {
   { -- Fuzzy Finder (files, lsp, etc)

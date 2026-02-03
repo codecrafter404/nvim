@@ -2,6 +2,7 @@
 -- NOTE: gitsigns is already included in init.lua but contains only the base
 -- config. This will add also the recommended keymaps.
 
+---@module "lazy"
 ---@type LazyPluginSpec[]
 return {
   {

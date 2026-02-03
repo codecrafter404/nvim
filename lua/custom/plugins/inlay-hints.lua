@@ -1,3 +1,4 @@
+---@module "lazy"
 ---@type LazyPluginSpec
 return {
   'MysticalDevil/inlay-hints.nvim',
