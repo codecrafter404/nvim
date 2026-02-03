@@ -3,7 +3,6 @@
 
 return {
   'windwp/nvim-autopairs',
-  tag = 'v0.6.0',
   event = 'InsertEnter',
   -- Optional dependency
   dependencies = { { 'hrsh7th/nvim-cmp', commit = 'ae644fe' } },

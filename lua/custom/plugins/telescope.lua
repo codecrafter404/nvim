@@ -1,10 +1,9 @@
 return {
   { -- Fuzzy Finder (files, lsp, etc)
     'nvim-telescope/telescope.nvim',
-    tag = '0.1.8',
     event = 'VimEnter',
     dependencies = {
-      { 'nvim-lua/plenary.nvim', tag = 'v0.1.4' },
+      { 'nvim-lua/plenary.nvim' },
       { -- If encountering errors, see telescope-fzf-native README for installation instructions
         'nvim-telescope/telescope-fzf-native.nvim',
         commit = '6a33ecb',
@@ -22,7 +21,7 @@ return {
       { 'nvim-telescope/telescope-ui-select.nvim', commit = '6e7c000' },
 
       -- Useful for getting pretty icons, but requires a Nerd Font.
-      { 'nvim-tree/nvim-web-devicons', tag = 'v0.100', enabled = vim.g.have_nerd_font },
+      { 'nvim-tree/nvim-web-devicons', enabled = vim.g.have_nerd_font },
     },
     config = function()
       -- Telescope is a fuzzy finder that comes with a lot of different things that

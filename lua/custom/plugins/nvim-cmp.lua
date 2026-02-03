@@ -1,13 +1,11 @@
 return {
   { -- Autocompletion
     'hrsh7th/nvim-cmp',
-    tag = 'v0.0.2',
     event = 'InsertEnter',
     dependencies = {
       -- Snippet Engine & its associated nvim-cmp source
       {
         'L3MON4D3/LuaSnip',
-        tag = 'v2.4.1',
         build = (function()
           -- Build Step is needed for regex support in snippets.
           -- This step is not supported in many windows environments.
