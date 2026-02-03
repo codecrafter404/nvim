@@ -10,6 +10,7 @@
 --   return 'Attachements' .. pathseperator .. res
 -- end
 
+---@module "lazy"
 ---@type LazyPluginSpec
 return {
   'codecrafter404/clipboard-image.nvim',

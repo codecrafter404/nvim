@@ -14,7 +14,6 @@ return {
 
       -- `neodev` configures Lua LSP for your Neovim config, runtime and plugins
       -- used for completion, annotations and signatures of Neovim apis
-      -- { 'folke/neodev.nvim', opts = {} },
       -- { 'diogo464/kubernetes.nvim', commit = '101e63f8f92b2ae9cf6a78560bc2b2321d1264af' },
       { 'saghen/blink.cmp' },
     },

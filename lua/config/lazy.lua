@@ -17,8 +17,8 @@ end
 
 vim.opt.rtp:prepend(lazypath)
 
--- Setup lazy.nvim
-require('lazy').setup {
+---@type LazyConfig asdf
+local config = {
   spec = {
     { import = 'custom.plugins' },
     { import = 'kickstart.plugins' },
@@ -52,3 +52,5 @@ require('lazy').setup {
     },
   },
 }
+-- Setup lazy.nvim
+require('lazy').setup(config)
