@@ -5,6 +5,8 @@
 --
 --]]
 
+---Check if the Neovim version meets the minimum requirements
+---@return nil
 local check_version = function()
   local verstr = string.format('%s.%s.%s', vim.version().major, vim.version().minor, vim.version().patch)
   if not vim.version.cmp then
@@ -19,6 +21,8 @@ local check_version = function()
   end
 end
 
+---Check if required external tools are installed (git, make, unzip, rg)
+---@return boolean always returns true
 local check_external_reqs = function()
   -- Basic utils: `git`, `make`, `unzip`
   for _, exe in ipairs { 'git', 'make', 'unzip', 'rg' } do
@@ -33,7 +37,10 @@ local check_external_reqs = function()
   return true
 end
 
+---@type table Health check module for kickstart.nvim
 return {
+  ---Run all health checks
+  ---@return nil
   check = function()
     vim.health.start 'kickstart.nvim'
 

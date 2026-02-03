@@ -1,13 +1,17 @@
 -- autopairs
 -- https://github.com/windwp/nvim-autopairs
 
+---@type LazyPluginSpec
 return {
   'windwp/nvim-autopairs',
   event = 'InsertEnter',
   -- Optional dependency
   dependencies = { { 'hrsh7th/nvim-cmp' } },
   opts = {},
+  ---Configure nvim-autopairs with cmp integration
+  ---@return nil
   config = function()
+    ---@type table Autopairs configuration options
     local opts = {
       ignored_next_char = [=[[%w%%%'%[%"%.%`]]=],
     }

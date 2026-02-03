@@ -1,5 +1,8 @@
 vim.opt.exrc = true
 
+---Insert text at the current cursor position
+---@param text string The text to insert at the cursor position
+---@return nil
 function InsertUnderCursor(text)
   local pos = vim.api.nvim_win_get_cursor(0)
 

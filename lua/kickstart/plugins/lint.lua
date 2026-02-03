@@ -1,8 +1,11 @@
+---@type LazyPluginSpec[]
 return {
 
   { -- Linting
     'mfussenegger/nvim-lint',
     event = { 'BufReadPre', 'BufNewFile' },
+    ---Configure nvim-lint with linters per filetype
+    ---@return nil
     config = function()
       local lint = require 'lint'
       lint.linters_by_ft = {
@@ -43,9 +46,12 @@ return {
 
       -- Create autocommand which carries out the actual linting
       -- on the specified events.
+      ---@type integer Augroup for lint autocommands
       local lint_augroup = vim.api.nvim_create_augroup('lint', { clear = true })
       vim.api.nvim_create_autocmd({ 'BufEnter', 'BufWritePost', 'InsertLeave' }, {
         group = lint_augroup,
+        ---Trigger linting on buffer events
+        ---@return nil
         callback = function()
           require('lint').try_lint()
         end,

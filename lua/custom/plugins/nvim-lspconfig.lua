@@ -1,3 +1,4 @@
+---@type LazyPluginSpec[]
 return {
   { -- LSP Configuration & Plugins
     'neovim/nvim-lspconfig',
@@ -17,6 +18,8 @@ return {
       -- { 'diogo464/kubernetes.nvim', commit = '101e63f8f92b2ae9cf6a78560bc2b2321d1264af' },
       { 'saghen/blink.cmp' },
     },
+    ---Configure LSP servers and related functionality
+    ---@return nil
     config = function()
       -- Brief aside: **What is LSP?**
       --
@@ -49,12 +52,20 @@ return {
       --    function will be executed to configure the current buffer
       vim.api.nvim_create_autocmd('LspAttach', {
         group = vim.api.nvim_create_augroup('kickstart-lsp-attach', { clear = true }),
+        ---Handle LSP attach event
+        ---@param event table The autocmd event data containing buf and data fields
+        ---@return nil
         callback = function(event)
           -- NOTE: Remember that Lua is a real programming language, and as such it is possible
           -- to define small helper and utility functions so you don't have to repeat yourself.
           --
           -- In this case, we create a function that lets us more easily define mappings specific
           -- for LSP related items. It sets the mode, buffer and description for us each time.
+          ---Create a keymap for LSP-related functionality
+          ---@param keys string The key combination for the mapping
+          ---@param func function|string The function or command to execute
+          ---@param desc string Description of what the keymap does
+          ---@return nil
           local map = function(keys, func, desc)
             vim.keymap.set('n', keys, func, { buffer = event.buf, desc = 'LSP: ' .. desc })
           end
@@ -122,6 +133,9 @@ return {
 
             vim.api.nvim_create_autocmd('LspDetach', {
               group = vim.api.nvim_create_augroup('kickstart-lsp-detach', { clear = true }),
+              ---Handle LSP detach event
+              ---@param event2 table The autocmd event data for detach
+              ---@return nil
               callback = function(event2)
                 vim.lsp.buf.clear_references()
                 vim.api.nvim_clear_autocmds { group = 'kickstart-lsp-highlight', buffer = event2.buf }
@@ -135,6 +149,8 @@ return {
           -- This may be unwanted, since they displace some of your code
           if client and client.server_capabilities.inlayHintProvider and vim.lsp.inlay_hint then
             map('<leader>th', function()
+              ---Toggle inlay hints for the current buffer
+              ---@return nil
               vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled())
             end, '[T]oggle Inlay [H]ints')
           end
@@ -158,7 +174,11 @@ return {
         virtual_text = {
           source = 'if_many',
           spacing = 2,
+          ---Format diagnostic message for virtual text display
+          ---@param diagnostic vim.Diagnostic The diagnostic object
+          ---@return string The formatted diagnostic message
           format = function(diagnostic)
+            ---@type table<integer, string>
             local diagnostic_message = {
               [vim.diagnostic.severity.ERROR] = diagnostic.message,
               [vim.diagnostic.severity.WARN] = diagnostic.message,
@@ -170,8 +190,10 @@ return {
         },
       }
 
+      ---@type lsp.ClientCapabilities
       local capabilities = require('blink.cmp').get_lsp_capabilities()
 
+      ---@type table<string, table> LSP server configurations
       local servers = {
         marksman = {},
         yamlls = {
@@ -280,6 +302,7 @@ return {
 
       -- You can add other tools here that you want Mason to install
       -- for you, so that they are available from within Neovim.
+      ---@type string[] List of tools to ensure are installed
       local ensure_installed = vim.tbl_keys(servers or {})
       vim.list_extend(ensure_installed, {
         'stylua', -- Used to format Lua code
