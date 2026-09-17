@@ -1,230 +1,296 @@
-# kickstart.nvim
+# nixvim-final
 
-## Introduction
+A standalone [NixVim](https://github.com/nix-community/nixvim) configuration — Neovim fully configured and reproducible via Nix, no plugin managers or runtime installations needed.
 
-A starting point for Neovim that is:
+---
 
-* Small
-* Single-file
-* Completely Documented
+## Prerequisites
 
-**NOT** a Neovim distribution, but instead a starting point for your configuration.
+- **Nix** with flakes enabled. If you don't have Nix yet, install it via the [Determinate Nix Installer](https://github.com/DeterminateSystems/nix-installer) (recommended — handles flakes out of the box):
+  ```bash
+  curl --proto '=https' --tlsv1.2 -sSf -L https://install.determinate.systems/nix | sh -s -- install
+  ```
+  If you already have Nix but not flakes, add the following to `/etc/nix/nix.conf`:
+  ```
+  experimental-features = nix-command flakes
+  ```
+
+---
 
 ## Installation
 
-### Install Neovim
+### 1. Uninstall Homebrew Neovim (if present)
 
-Kickstart.nvim targets *only* the latest
-['stable'](https://github.com/neovim/neovim/releases/tag/stable) and latest
-['nightly'](https://github.com/neovim/neovim/releases/tag/nightly) of Neovim.
-If you are experiencing issues, please make sure you have the latest versions.
+Having a Homebrew `nvim` on your `PATH` will shadow the Nix-managed one. Remove it first:
 
-### Install External Dependencies
-
-External Requirements:
-- Basic utils: `git`, `make`, `unzip`, C Compiler (`gcc`)
-- [ripgrep](https://github.com/BurntSushi/ripgrep#installation)
-- Clipboard tool (xclip/xsel/win32yank or other depending on platform)
-- A [Nerd Font](https://www.nerdfonts.com/): optional, provides various icons
-  - if you have it set `vim.g.have_nerd_font` in `init.lua` to true
-- Language Setup:
-  - If want to write Typescript, you need `npm`
-  - If want to write Golang, you will need `go`
-  - etc.
-
-> **NOTE**
-> See [Install Recipes](#Install-Recipes) for additional Windows and Linux specific notes
-> and quick install snippets
-
-### Install Kickstart
-
-> **NOTE**
-> [Backup](#FAQ) your previous configuration (if any exists)
-
-Neovim's configurations are located under the following paths, depending on your OS:
-
-| OS | PATH |
-| :- | :--- |
-| Linux, MacOS | `$XDG_CONFIG_HOME/nvim`, `~/.config/nvim` |
-| Windows (cmd)| `%userprofile%\AppData\Local\nvim\` |
-| Windows (powershell)| `$env:USERPROFILE\AppData\Local\nvim\` |
-
-#### Recommended Step
-
-[Fork](https://docs.github.com/en/get-started/quickstart/fork-a-repo) this repo
-so that you have your own copy that you can modify, then install by cloning the
-fork to your machine using one of the commands below, depending on your OS.
-
-> **NOTE**
-> Your fork's url will be something like this:
-> `https://github.com/<your_github_username>/kickstart.nvim.git`
-
-#### Clone kickstart.nvim
-> **NOTE**
-> If following the recommended step above (i.e., forking the repo), replace
-> `nvim-lua` with `<your_github_username>` in the commands below
-
-<details><summary> Linux and Mac </summary>
-
-```sh
-git clone https://github.com/nvim-lua/kickstart.nvim.git "${XDG_CONFIG_HOME:-$HOME/.config}"/nvim
+```bash
+brew uninstall neovim
 ```
 
-</details>
+Verify no leftover shim exists:
 
-<details><summary> Windows </summary>
-
-If you're using `cmd.exe`:
-
-```
-git clone https://github.com/nvim-lua/kickstart.nvim.git %userprofile%\AppData\Local\nvim\
+```bash
+which nvim   # should print nothing, or only a nix-profile path after step 2
 ```
 
-If you're using `powershell.exe`
+### 2. Install into your Nix profile
 
-```
-git clone https://github.com/nvim-lua/kickstart.nvim.git $env:USERPROFILE\AppData\Local\nvim\
-```
+From inside the repo directory, run:
 
-</details>
-
-### Post Installation
-
-Start Neovim
-
-```sh
-nvim
+```bash
+nix profile install .
 ```
 
-That's it! Lazy will install all the plugins you have. Use `:Lazy` to view
-current plugin status. Hit `q` to close the window.
+This builds the configuration and adds `nvim` to `~/.nix-profile/bin`, which is on your `PATH` by default.
 
-Read through the `init.lua` file in your configuration folder for more
-information about extending and exploring Neovim. That also includes
-examples of adding popularly requested plugins.
+Verify:
 
-**Updating plugins:** All plugins are pinned to specific versions. Run `:Lazy sync` to update plugins after modifying version pins in the plugin files.
-
-### Getting Started
-
-[The Only Video You Need to Get Started with Neovim](https://youtu.be/m8C0Cq9Uv9o)
-
-### FAQ
-
-* What should I do if I already have a pre-existing neovim configuration?
-  * You should back it up and then delete all associated files.
-  * This includes your existing init.lua and the neovim files in `~/.local`
-    which can be deleted with `rm -rf ~/.local/share/nvim/`
-* Can I keep my existing configuration in parallel to kickstart?
-  * Yes! You can use [NVIM_APPNAME](https://neovim.io/doc/user/starting.html#%24NVIM_APPNAME)`=nvim-NAME`
-    to maintain multiple configurations. For example, you can install the kickstart
-    configuration in `~/.config/nvim-kickstart` and create an alias:
-    ```
-    alias nvim-kickstart='NVIM_APPNAME="nvim-kickstart" nvim'
-    ```
-    When you run Neovim using `nvim-kickstart` alias it will use the alternative
-    config directory and the matching local directory
-    `~/.local/share/nvim-kickstart`. You can apply this approach to any Neovim
-    distribution that you would like to try out.
-* What if I want to "uninstall" this configuration:
-  * See [lazy.nvim uninstall](https://github.com/folke/lazy.nvim#-uninstalling) information
-* Why is the kickstart `init.lua` a single file? Wouldn't it make sense to split it into multiple files?
-  * The main purpose of kickstart is to serve as a teaching tool and a reference
-    configuration that someone can easily use to `git clone` as a basis for their own.
-    As you progress in learning Neovim and Lua, you might consider splitting `init.lua`
-    into smaller parts. A fork of kickstart that does this while maintaining the 
-    same functionality is available here:
-    * [kickstart-modular.nvim](https://github.com/dam9000/kickstart-modular.nvim)
-  * Discussions on this topic can be found here:
-    * [Restructure the configuration](https://github.com/nvim-lua/kickstart.nvim/issues/218)
-    * [Reorganize init.lua into a multi-file setup](https://github.com/nvim-lua/kickstart.nvim/pull/473)
-
-### Install Recipes
-
-Below you can find OS specific install instructions for Neovim and dependencies.
-
-After installing all the dependencies continue with the [Install Kickstart](#Install-Kickstart) step.
-
-#### Windows Installation
-
-<details><summary>Windows with Microsoft C++ Build Tools and CMake</summary>
-Installation may require installing build tools and updating the run command for `telescope-fzf-native`
-
-See `telescope-fzf-native` documentation for [more details](https://github.com/nvim-telescope/telescope-fzf-native.nvim#installation)
-
-This requires:
-
-- Install CMake and the Microsoft C++ Build Tools on Windows
-
-```lua
-{'nvim-telescope/telescope-fzf-native.nvim', build = 'cmake -S. -Bbuild -DCMAKE_BUILD_TYPE=Release && cmake --build build --config Release && cmake --install build --prefix build' }
-```
-</details>
-<details><summary>Windows with gcc/make using chocolatey</summary>
-Alternatively, one can install gcc and make which don't require changing the config,
-the easiest way is to use choco:
-
-1. install [chocolatey](https://chocolatey.org/install)
-either follow the instructions on the page or use winget,
-run in cmd as **admin**:
-```
-winget install --accept-source-agreements chocolatey.chocolatey
+```bash
+nvim --version
 ```
 
-2. install all requirements using choco, exit previous cmd and
-open a new one so that choco path is set, and run in cmd as **admin**:
+### 3. A Nerd Font is required
+
+The configuration uses Nerd Font icons throughout (status line, diagnostics, devicons). Install one and set it as your terminal font — [JetBrains Mono Nerd Font](https://www.nerdfonts.com/font-downloads) is a solid choice.
+
+---
+
+## Updating
+
+### Update all flake inputs (nixpkgs, nixvim, …)
+
+```bash
+nix flake update
 ```
-choco install -y neovim git ripgrep wget fd unzip gzip mingw make
+
+### Apply the updated configuration to your profile
+
+```bash
+nix profile upgrade '.*'
 ```
-</details>
-<details><summary>WSL (Windows Subsystem for Linux)</summary>
+
+Or, if you know the exact profile index (check with `nix profile list`):
+
+```bash
+nix profile upgrade 0
+```
+
+### Rebuild without updating inputs
+
+If you only changed `config.nix` and want to re-install without bumping any dependencies:
+
+```bash
+nix profile remove nvim   # remove by name, or use the index from `nix profile list`
+nix profile install .
+```
+
+---
+
+## Project Structure
 
 ```
-wsl --install
-wsl
-sudo add-apt-repository ppa:neovim-ppa/unstable -y
-sudo apt update
-sudo apt install make gcc ripgrep unzip git xclip neovim
+nixvim-final/
+├── flake.nix          # Flake entry point — defines inputs and exposes the nvim package
+├── flake.lock         # Locked input revisions (commit this for reproducibility)
+├── config.nix         # All Neovim configuration lives here
+└── snippets/
+    ├── dart.snippets       # Snipmate-format snippets for Dart
+    └── markdown.snippets   # Snipmate-format snippets for Markdown
 ```
-</details>
 
-#### Linux Install
-<details><summary>Ubuntu Install Steps</summary>
+All configuration is in **`config.nix`**. The file is organised into clearly labelled sections:
 
+| Section | What it controls |
+|---|---|
+| `extraFiles` | Snippet files copied into the Neovim config directory |
+| `globals` / `opts` | Leader key, editor options (line numbers, clipboard, …) |
+| `diagnostic` | Diagnostic display (virtual text, signs, float border) |
+| `keymaps` | All custom key bindings |
+| `autoGroups` / `autoCmd` | Autocommands (yank highlight, LSP ref highlight) |
+| `colorschemes` | Theme (Tokyo Night – night style) |
+| `plugins` | Every plugin: LSP, completion, Telescope, Treesitter, UI, … |
+| `extraPlugins` | Plugins not yet in nixvim's module set (built via `buildVimPlugin`) |
+| `extraConfigLua` | Raw Lua that runs after plugin setup |
+
+---
+
+## Adding a New LSP
+
+NixVim manages LSP servers declaratively. All servers live inside the `plugins.lsp.servers` block in `config.nix`.
+
+### Step 1 — check if nixvim supports the server
+
+Browse the [nixvim LSP options](https://nix-community.github.io/nixvim/plugins/lsp/servers/) or search the nixvim source for the server name. Most servers from `nvim-lspconfig` are available.
+
+### Step 2 — enable it in `config.nix`
+
+```nix
+plugins.lsp.servers = {
+  # existing servers …
+  lua_ls.enable = true;
+
+  # add your new server here, e.g. PHP:
+  phpactor.enable = true;
+
+  # or with extra settings:
+  tinymist = {
+    enable = true;
+    settings.exportPdf = "onSave";
+  };
+};
 ```
-sudo add-apt-repository ppa:neovim-ppa/unstable -y
-sudo apt update
-sudo apt install make gcc ripgrep unzip git xclip neovim
-```
-</details>
-<details><summary>Debian Install Steps</summary>
 
-```
-sudo apt update
-sudo apt install make gcc ripgrep unzip git xclip curl
+Several servers are already present but commented out near the bottom of the `servers` block (`phpactor`, `graphql`, `tinymist`, `lemminx`) — uncomment them to activate.
 
-# Now we install nvim
-curl -LO https://github.com/neovim/neovim/releases/latest/download/nvim-linux64.tar.gz
-sudo rm -rf /opt/nvim-linux64
-sudo mkdir -p /opt/nvim-linux64
-sudo chmod a+rX /opt/nvim-linux64
-sudo tar -C /opt -xzf nvim-linux64.tar.gz
+### Step 3 — rebuild
 
-# make it available in /usr/local/bin, distro installs to /usr/bin
-sudo ln -sf /opt/nvim-linux64/bin/nvim /usr/local/bin/
+```bash
+nix profile remove nvim
+nix profile install .
 ```
-</details>
-<details><summary>Fedora Install Steps</summary>
 
-```
-sudo dnf install -y gcc make git ripgrep fd-find unzip neovim
-```
-</details>
+The server binary is fetched and pinned by Nix — no separate `mason` or `npm install` needed.
 
-<details><summary>Arch Install Steps</summary>
+---
 
-```
-sudo pacman -S --noconfirm --needed gcc make git ripgrep fd unzip neovim
-```
-</details>
+## Adding a New Plugin
 
+### Plugins available in the nixvim module set
+
+Most popular plugins have first-class NixVim modules. Add them inside the `plugins` block:
+
+```nix
+plugins = {
+  # existing plugins …
+  neogit.enable = true;
+};
+```
+
+Check available modules at [nix-community.github.io/nixvim](https://nix-community.github.io/nixvim/).
+
+### Plugins not in the nixvim module set
+
+Use `extraPlugins` with `buildVimPlugin`:
+
+```nix
+extraPlugins = [
+  (pkgs.vimUtils.buildVimPlugin {
+    name = "my-plugin";
+    src = pkgs.fetchFromGitHub {
+      owner  = "author";
+      repo   = "repo-name";
+      rev    = "main";          # or a specific commit / tag
+      hash   = pkgs.lib.fakeHash;  # replace after the first failed build
+    };
+  })
+];
+```
+
+On the first `nix build` attempt the hash will be wrong — Nix will print the correct `got:` hash in the error output. Paste it in, then rebuild.
+
+Any Lua setup for the plugin goes in `extraConfigLua`:
+
+```nix
+extraConfigLua = ''
+  require("my-plugin").setup({})
+'';
+```
+
+---
+
+## Adding Snippets
+
+Snippets use **snipmate format** and are loaded by LuaSnip.
+
+1. Create a file at `snippets/<filetype>.snippets` (e.g. `snippets/go.snippets`).
+2. Register it in the `extraFiles` block at the top of `config.nix`:
+   ```nix
+   extraFiles = {
+     "snippets/dart.snippets".source     = ./snippets/dart.snippets;
+     "snippets/markdown.snippets".source = ./snippets/markdown.snippets;
+     "snippets/go.snippets".source       = ./snippets/go.snippets;  # ← add this
+   };
+   ```
+3. Rebuild (`nix profile remove nvim && nix profile install .`).
+
+Snippet syntax reference: [honza/vim-snippets](https://github.com/honza/vim-snippets) (snipmate format).
+
+---
+
+## Key Bindings Reference
+
+`<leader>` is **Space**.
+
+### Navigation & Search (Telescope)
+
+| Key | Action |
+|---|---|
+| `<leader><leader>` | Open buffers |
+| `<leader>sf` | Find files |
+| `<leader>sg` | Live grep |
+| `<leader>s/` | Grep in open files |
+| `<leader>sh` | Help tags |
+| `<leader>sk` | Keymaps |
+| `<leader>sd` | Diagnostics |
+| `<leader>sr` | Resume last picker |
+| `<leader>s.` | Recent files |
+| `<leader>sn` | Search Neovim config files |
+| `<leader>/` | Fuzzy search in current buffer |
+
+### LSP
+
+| Key | Action |
+|---|---|
+| `gd` | Go to definition |
+| `gr` | Go to references |
+| `gI` | Go to implementation |
+| `gD` | Go to declaration |
+| `K` | Hover documentation |
+| `<leader>rn` | Rename symbol |
+| `<leader>ca` | Code action |
+| `<leader>D` | Type definition |
+| `<leader>ds` | Document symbols |
+| `<leader>ws` | Workspace symbols |
+| `<leader>th` | Toggle inlay hints |
+
+### Diagnostics
+
+| Key | Action |
+|---|---|
+| `<leader>e` | Show diagnostic float |
+| `<leader>q` | Send diagnostics to quickfix |
+
+### Editing
+
+| Key | Action |
+|---|---|
+| `<leader>f` | Format buffer (conform / LSP fallback) |
+| `<leader>ii` | Paste image from clipboard |
+| `<leader>if` | Insert link to most recent PDF in `Attachements/PDF/` |
+| `<leader>id` | Insert date link |
+
+### SOPS (secret files)
+
+| Key | Action |
+|---|---|
+| `<leader>td` | Decrypt current file in place |
+| `<leader>te` | Encrypt current file in place |
+
+---
+
+## Troubleshooting
+
+**`nvim` not found after install**
+Make sure `~/.nix-profile/bin` is on your `PATH`. Add to your shell rc:
+```bash
+export PATH="$HOME/.nix-profile/bin:$PATH"
+```
+
+**Icons look like boxes / question marks**
+A Nerd Font is not set in your terminal. Install one and configure your terminal emulator to use it.
+
+**Hash mismatch when adding an `extraPlugin`**
+Run `nix build` once — Nix will print the correct hash in the error. Copy the `got:` value into the `hash` field.
+
+**Slow first start after rebuild**
+Treesitter has `auto_install = true`, so parsers for open filetypes are compiled on first use. This is a one-time cost per language.
