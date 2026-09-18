@@ -4,6 +4,11 @@
   extraFiles = {
     "snippets/dart.snippets".source = ./snippets/dart.snippets;
     "snippets/markdown.snippets".source = ./snippets/markdown.snippets;
+    "after/ftplugin/nix.lua".text = ''
+      vim.opt_local.tabstop = 2
+      vim.opt_local.shiftwidth = 2
+      vim.opt_local.expandtab = true
+    '';
   };
 
   # ───────────────────────────── Options ─────────────────────────────
