@@ -65,14 +65,10 @@ nix flake update
 
 ### Apply the updated configuration to your profile
 
-```bash
-nix profile upgrade '.*'
-```
-
 Or, if you know the exact profile index (check with `nix profile list`):
 
 ```bash
-nix profile upgrade 0
+nix profile upgrade nvim
 ```
 
 ### Rebuild without updating inputs
