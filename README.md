@@ -38,7 +38,7 @@ which nvim   # should print nothing, or only a nix-profile path after step 2
 From inside the repo directory, run:
 
 ```bash
-nix profile install .
+nix profile add .
 ```
 
 This builds the configuration and adds `nvim` to `~/.nix-profile/bin`, which is on your `PATH` by default.
