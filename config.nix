@@ -276,7 +276,17 @@
           };
         };
         ts_ls.enable = true;
-        nil_ls.enable = true;
+        nil_ls = {
+          enable = true;
+          settings = {
+            nix = {
+              flake = {
+                autoArchive = true;
+                autoEvalInputs = true;
+              };
+            };
+          };
+        };
         svelte.enable = true;
         cssls.enable = true;
         tailwindcss.enable = true;
